@@ -46,16 +46,6 @@ jobs:
         type: 'docker'
         set-env: true # Enables the command to set en vars on Clever Cloud
   
-    - name: Deploy to Clever Cloud
-      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-      run: |
-        clever login --token ${{ secrets.CLEVER_TOKEN }} --secret ${{ secrets.CLEVER_SECRET }}
-        clever link --app ${{ secrets.CC_APP_ID }}
-        clever deploy --type static
-      env:
-        CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
-        CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
-        
     - name: Quality Checks
       if: github.event_name == 'pull_request'
       run: |
