@@ -36,15 +36,15 @@ jobs:
       run: npm install -g clever-tools
       
     name: Create review app
-        uses: CleverCloud/clever-cloud-review-app@latest
-        env:
-          CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
-          CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
-          # ORGA_ID: ${{ secrets.ORGA_ID }}
-          GH_CC_RUN_SUCCEEDED_HOOK: ${{ secrets.CC_RUN_SUCCEEDED_HOOK }} # This environment variable will be set on Clever Cloud
-        with:
-          type: 'docker'
-          set-env: true # Enables the command to set en vars on Clever Cloud
+    uses: CleverCloud/clever-cloud-review-app@latest
+      env:
+        CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
+        CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
+        # ORGA_ID: ${{ secrets.ORGA_ID }}
+        GH_CC_RUN_SUCCEEDED_HOOK: ${{ secrets.CC_RUN_SUCCEEDED_HOOK }} # This environment variable will be set on Clever Cloud
+      with:
+        type: 'docker'
+        set-env: true # Enables the command to set en vars on Clever Cloud
   
     - name: Deploy to Clever Cloud
       if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
