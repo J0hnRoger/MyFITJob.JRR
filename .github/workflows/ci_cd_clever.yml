@@ -3,13 +3,22 @@ name: CI/CD - Deploy to Clever Cloud
 on:
   push:
     branches: [ main, master ]
-  pull_request:
+  pull_request_target:
     branches: [ main, master ]
   workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
     
     steps:
     - name: Checkout code
@@ -40,6 +49,7 @@ jobs:
       env:
         CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
         CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         # ORGA_ID: ${{ secrets.ORGA_ID }}
         GH_CC_RUN_SUCCEEDED_HOOK: ${{ secrets.CC_RUN_SUCCEEDED_HOOK }} # This environment variable will be set on Clever Cloud
       with:
